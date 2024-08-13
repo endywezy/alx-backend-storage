@@ -1,2 +1,2 @@
-// my comment
-show dbs
+// Lists all MongoDB databases.
+show dbs;
