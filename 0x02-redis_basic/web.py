@@ -32,7 +32,27 @@ def track_get_page(fn: Callable) -> Callable:
         return response
     return wrapper
 
+# Fetch the HTML content of http://google.com
+response = get_page("http://google.com")
+print(response)
 
+# Check if the response is cached in Redis
+cached_page = client.get("http://google.com")
+if cached_page:
+    print("Cached response:", cached_page.decode('utf-8'))
+else:
+    print("No cached response found")
+
+# Wait for 10 seconds
+import time
+time.sleep(10)
+
+# Check if the cached response has been removed from Redis
+cached_page = client.get("http://google.com")
+if cached_page:
+    print("Cached response still exists")
+else:
+    print("Cached response has been removed")
 @track_get_page
 def get_page(url: str) -> str:
     """ Fetches the HTML content of a URL """
